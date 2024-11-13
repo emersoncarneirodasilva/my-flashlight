@@ -17,7 +17,9 @@
 
 1. Clone este repositório para o seu dispositivo local.
 2. Instale as dependências com o comando `npm install` ou `yarn install`.
-3. Inicie o aplicativo com `expo start` e escolha seu dispositivo para testes (emulador ou dispositivo físico). 
+3. Inicie o aplicativo com `expo start` e escolha seu dispositivo para testes (emulador ou dispositivo físico).
+
+## Imagens
 
 ![01](https://github.com/user-attachments/assets/86824dd5-0024-4145-8406-fa4d15c82045)
 

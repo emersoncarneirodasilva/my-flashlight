@@ -20,7 +20,7 @@ interface StrobeProviderProps {
 }
 
 export const StrobeProvider = ({ children }: StrobeProviderProps) => {
-  const [intensity, setIntensity] = useState<number>(2);
+  const [intensity, setIntensity] = useState<number>(3);
 
   return (
     <StrobeContext.Provider value={{ intensity, setIntensity }}>

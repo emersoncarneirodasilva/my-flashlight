@@ -1,17 +1,22 @@
 import {
   Button,
   Image,
-  StyleSheet,
+  ImageBackground,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import {
   useFonts,
-  BadScript_400Regular as BadScript,
-} from "@expo-google-fonts/bad-script";
+  Montserrat_400Regular as Montserrat,
+} from "@expo-google-fonts/montserrat";
+import { BadScript_400Regular as BadScript } from "@expo-google-fonts/bad-script";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { useFlashlight } from "../hooks/useFlashlight";
+import { useContext } from "react";
+import { LanguageContext } from "../contexts/LanguagesContext";
+import { useStyles } from "../hooks/useStyles";
+import { useAccelerometer } from "../hooks/useAccelerometer";
 
 const onButton = "@/src/assets/images/on.png";
 const offButton = "@/src/assets/images/off.png";
@@ -19,8 +24,10 @@ const strobeButton = "@/src/assets/images/strobe-button.png";
 const sosButton = "@/src/assets/images/sos-button.png";
 
 export default function Index() {
+  const styles = useStyles();
+  const { language } = useContext(LanguageContext)!;
   const [permission, requestPermission] = useCameraPermissions();
-  const [fontsLoaded] = useFonts({ BadScript });
+  const [fontsLoaded] = useFonts({ Montserrat, BadScript });
   const {
     on,
     flashOn,
@@ -30,6 +37,8 @@ export default function Index() {
     toggleFlash,
     playSosSignal,
   } = useFlashlight();
+
+  useAccelerometer(toggleFlash);
 
   if (!fontsLoaded) {
     return null;
@@ -89,76 +98,28 @@ export default function Index() {
           onPress={() => setIsStrobeOn((prev) => !prev)}
           disabled={isSosOn ? true : false}
         >
-          <Image
+          <ImageBackground
             source={require(strobeButton)}
             style={styles.strobeAndSosButtonImg}
-          />
+          >
+            <Text style={styles.strobeText}>
+              {language === "portuguese" ? "Piscar" : "Blink"}
+            </Text>
+          </ImageBackground>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={playSosSignal}
           disabled={isSosOn ? true : false}
         >
-          <Image
+          <ImageBackground
             source={require(sosButton)}
             style={styles.strobeAndSosButtonImg}
-          />
+          >
+            <Text style={styles.sosText}>S.O.S.</Text>
+          </ImageBackground>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-between",
-    paddingHorizontal: 22,
-    backgroundColor: "#0f0f0f",
-  },
-  containerPermission: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 22,
-  },
-  messagePermission: {
-    textAlign: "center",
-    fontSize: 16,
-    paddingBottom: 40,
-    color: "#000",
-  },
-  hiddenCamera: {
-    position: "absolute",
-    width: 1,
-    height: 1,
-    opacity: 0,
-  },
-  titleContainer: {
-    marginTop: 62,
-  },
-  title: {
-    textAlign: "center",
-    fontFamily: "BadScript",
-    fontSize: 32,
-    color: "#fff",
-  },
-  lightButtonContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  lightButtonImg: {
-    width: 200,
-    height: 200,
-  },
-  strobeAndSosContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    height: 150,
-  },
-  strobeAndSosButtonImg: {
-    width: 170,
-    height: 170,
-  },
-});

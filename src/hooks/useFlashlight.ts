@@ -1,26 +1,26 @@
 import { useState, useEffect, useContext } from "react";
 import { MORSE_SOS } from "../constants/flashlight";
 import { Vibration } from "react-native";
-// import { StrobeContext } from "../contexts/StrobeContext";
+import { StrobeContext } from "../contexts/StrobeContext";
 
 export const useFlashlight = () => {
-  // const { intensity } = useContext(StrobeContext)!;
+  const { intensity } = useContext(StrobeContext)!;
   const [on, setOn] = useState(false);
   const [flashOn, setFlashOn] = useState(false);
   const [isStrobeOn, setIsStrobeOn] = useState(false);
   const [isSosOn, setIsSosOn] = useState(false);
 
-  // let strobeValue = 0;
+  let strobeValue = 0;
 
-  // if (intensity === 1) {
-  //   strobeValue = 1200;
-  // } else if (intensity === 2) {
-  //   strobeValue = 800;
-  // } else if (intensity === 3) {
-  //   strobeValue = 500;
-  // } else {
-  //   strobeValue = 150;
-  // }
+  if (intensity === 1) {
+    strobeValue = 1200;
+  } else if (intensity === 2) {
+    strobeValue = 800;
+  } else if (intensity === 3) {
+    strobeValue = 500;
+  } else {
+    strobeValue = 150;
+  }
 
   useEffect(() => {
     let strobeInterval: NodeJS.Timeout | undefined;
@@ -29,7 +29,7 @@ export const useFlashlight = () => {
     if (isStrobeOn) {
       strobeInterval = setInterval(() => {
         setFlashOn((prev) => !prev);
-      }, 200);
+      }, strobeValue);
     } else {
       clearInterval(strobeInterval);
       setFlashOn(false);

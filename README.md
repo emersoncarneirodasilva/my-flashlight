@@ -1,4 +1,4 @@
-# My Flashlight
+# My Flashlight 🔦
 
 **My Flashlight** é um aplicativo de lanterna desenvolvido em React Native com Expo. O objetivo do app é fornecer uma experiência de iluminação multifuncional para dispositivos móveis, aproveitando o flash da câmera do celular para diferentes modos de iluminação. O aplicativo possui três modos principais: modo liga/desliga, modo estroboscópio e modo SOS.
 
